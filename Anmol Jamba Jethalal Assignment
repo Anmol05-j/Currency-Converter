@@ -1,0 +1,64 @@
+# Currency converter program
+
+# Function to display available currencies
+def display_currencies(currencies):
+    print("Available currencies:")
+    for code in currencies:
+        print(f"{code}: {currencies[code]}")
+
+# Function to convert currency
+def convert_currency(amount, rate):
+    return amount * rate
+
+# Main function
+def main():
+    # Define currency rates (against USD)
+    currencies = {
+        'USD': 'United States Dollar',
+        'EUR': 'Euro',
+        'GBP': 'British Pound',
+        'JPY': 'Japanese Yen',
+        'INR': 'Indian Rupee'
+    }
+    
+    rates = {
+        'USD': 1.0,
+        'EUR': 0.85,
+        'GBP': 0.75,
+        'JPY': 110.0,
+        'INR': 74.0
+    }
+
+    while True:
+        display_currencies(currencies)
+        
+        # Get user input for currency conversion
+        from_currency = input("Enter the currency code you want to convert from (or 'exit' to quit): ").upper()
+        if from_currency == 'EXIT':
+            print("Exiting the program.")
+            break
+        
+        if from_currency not in currencies:
+            print("Invalid currency code. Please try again.")
+            continue
+        
+        to_currency = input("Enter the currency code you want to convert to: ").upper()
+        if to_currency not in currencies:
+            print("Invalid currency code. Please try again.")
+            continue
+        
+        try:
+            amount = float(input(f"Enter the amount in {currencies[from_currency]}: "))
+        except ValueError:
+            print("Invalid amount. Please enter a numeric value.")
+            continue
+        
+        # Convert the amount to USD first, then to the target currency
+        amount_in_usd = amount / rates[from_currency]
+        converted_amount = convert_currency(amount_in_usd, rates[to_currency])
+        
+        print(f"{amount} {from_currency} is equal to {converted_amount:.2f} {to_currency}\n")
+
+# Run the program
+if __name__ == "__main__":
+    main()
